@@ -26,6 +26,7 @@ const corsOptions = {
   credentials: true,
 };
 
+
 app.use(express.static("static"));
 app.use(cors(corsOptions));
 app.use(session(sessionOptions));

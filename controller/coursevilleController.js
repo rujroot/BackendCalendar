@@ -171,6 +171,39 @@ exports.getCourseAssignments = (req, res) => {
   }
 };
 
+exports.getCourseInformation = (req, res) =>{
+  const cv_cid = req.params.cv_cid;
+  try {
+    const profileOptions = {
+      headers: {
+        Authorization: `Bearer ${req.session.token.access_token}`,
+      },
+    };
+    const profileReq = https.request(
+      `https://www.mycourseville.com/api/v1/public/get/course/info?cv_cid=${cv_cid}`,
+      profileOptions,
+      (profileRes) => {
+        let profileData = "";
+        profileRes.on("data", (chunk) => {
+          profileData += chunk;
+        });
+        profileRes.on("end", () => {
+          const profile = JSON.parse(profileData);
+          res.send(profile);
+          res.end();
+        });
+      }
+    );
+    profileReq.on("error", (err) => {
+      console.error(err);
+    });
+    profileReq.end();
+  } catch (error) {
+    console.log(error);
+    console.log("Please logout, then login again.");
+  }
+};
+
 // Outstanding #2
 exports.getAssignmentDetail = (req, res) => {
   const itemid = req.params.item_id;
