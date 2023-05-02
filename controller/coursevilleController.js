@@ -53,7 +53,7 @@ exports.accessToken = (req, res) => {
           console.log(req.session);
           if (token) {
             res.writeHead(302, {
-              Location: `http://${process.env.frontendIPAddress}/FrontL.html`,
+              Location: `http://${process.env.frontendIPAddress}/Front.html`,
             });
             res.end();
           }
@@ -240,6 +240,7 @@ exports.getAssignmentDetail = (req, res) => {
 
 exports.logout = (req, res) => {
   req.session.destroy();
+  //https://www.mycourseville.com/api/logout
   res.redirect(`http://${process.env.frontendIPAddress}/FrontLogin.html`);
   res.end();
 };
